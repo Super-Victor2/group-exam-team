@@ -1,0 +1,45 @@
+.navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    height: 70px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20%;
+}
+
+.navbar-title {
+    color: white;
+}
+
+.navbar-list {
+    display: flex;
+    flex-direction: row;
+    gap: 45px;
+}
+
+.navbar-item {
+    list-style-type: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-item:hover {
+    opacity: 80%;
+}
+
+@media screen and (max-width: 840px)  {
+    .navbar {
+        gap: 10%;
+    }
+    .navbar-list {
+        gap: 25px;
+    }
+}
+@media screen and (max-width: 670px)  {
+    .navbar-list {
+        display: none;
+    }
+}
