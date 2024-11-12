@@ -1,0 +1,11 @@
+Anteckningar för rapporten
+
+2024-11-11
+Victor: Jobbat med figma skissen, gjorde klart dator och mobil skissen
+Daniel: Hjälpte till med skissen
+Ammar: N/A
+
+2024-11-12
+Victor: Har startat react appen, har börjat med routning. Och ska börja med headern och home sidan. 
+Daniel: Jobbar med kontakta oss sidan. 
+Ammar: N/A
