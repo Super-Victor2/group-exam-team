@@ -1,0 +1,29 @@
+.about-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.about-section-top {
+    background-image: url('../../assets/bg.png');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+}
+
+.about-section-top-title {
+    color: white;
+    padding: 60px;
+    font-size: 32px;
+    text-shadow: 3px 3px 3px black;
+}
+
+.about-section-text {
+    font-size: 18px;
+    margin: 20px;
+    max-width: 800px;
+}
