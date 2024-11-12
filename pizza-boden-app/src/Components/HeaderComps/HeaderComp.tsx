@@ -12,6 +12,7 @@ function HeaderComp() {
                     <li className="navbar-item">Om oss</li>
                     <li className="navbar-item">Kontakta</li>
                 </ul>
+                <i className="menu fa-solid fa-bars"></i>
             </header>
         </>
     )

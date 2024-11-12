@@ -9,6 +9,10 @@
     gap: 20%;
 }
 
+.menu {
+    display: none;
+}
+
 .navbar-title {
     color: white;
 }
@@ -39,7 +43,27 @@
     }
 }
 @media screen and (max-width: 670px)  {
+    .navbar {
+        gap: 40%;
+    }
     .navbar-list {
         display: none;
+    }
+    .menu {
+        display: block;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+    }
+}@media screen and (max-width: 400px)  {
+    .navbar {
+        gap: 25%;
+    }
+    .navbar-list {
+        display: none;
+    }
+    .menu {
+        display: block;
+        color: white;
     }
 }
