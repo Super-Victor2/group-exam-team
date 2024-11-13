@@ -5,6 +5,7 @@ import HomePage from './Pages/HomePage/HomePage'
 import Header from './Components/HeaderComps/HeaderComp'
 import AboutPage from './Pages/AboutPage/AboutPage'
 import MenyPage from './Pages/MenuPage/MenyPage'
+import CartPage from './Pages/CartPage/CartPage'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/AboutPage' element={<AboutPage />} />
           <Route path='/MenyPage' element={<MenyPage />} />
+          <Route path='/CartPage' element={<CartPage />} />
       </Routes>
     </div>
     </>
@@ -28,4 +30,5 @@ export default App
  * Författare: Victor
  * Routning till hem och about
  * Fix: La till routning till meny
+ * Fix: La till routning till CartPage
  */
