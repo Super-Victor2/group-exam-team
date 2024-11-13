@@ -9,6 +9,10 @@
     gap: 20%;
 }
 
+a {
+    text-decoration: none;
+}
+
 .menu {
     display: none;
 }
