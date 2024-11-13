@@ -1,0 +1,63 @@
+.shipment-info-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.shipment-info-section-title {
+    font-weight: 400;
+    font-size: 42px;
+    margin: 0;
+    margin-top: 50px;
+}
+
+.shipment-info-inputs-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr auto;
+    gap: 10px;
+    margin: 30px;
+    border: 1px solid var(--primary-color);
+    padding: 10px;
+}
+
+.shipment-info-input {
+    padding: 8px 8px;
+}
+
+.shipment-info-input:nth-child(5) {
+    grid-column: 1 / -1;
+}
+
+.shipment-info-input:nth-child(6), .shipment-info-input:nth-child(7) {
+    grid-column: span 1;
+}
+
+.shipment-info-btn {
+    padding: 8px 50px;
+    background-color: var(--primary-button-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.shipment-info-btn:hover {
+    background-color: var(--primary-button-color-hover);
+}
+
+.shipment-info-btn:nth-child(1) {
+    margin: 5px;
+}
+
+@media screen and (max-width: 450px) {
+    .shipment-info-inputs-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .shipment-info-section-title {
+        font-size: 32px;
+    }
+}
