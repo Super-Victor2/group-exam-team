@@ -1,0 +1,95 @@
+.meny-section {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.meny-top-section {
+    background-image: url('../../assets/pizzzzaaaa.jpg');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+}
+
+.meny-top-section-text-wrapper {
+    padding: 80px;
+}
+
+.meny-top-section-title {
+    color: white;
+    font-size: 42px;
+    text-shadow: 3px 3px 3px black;
+    margin: 5px;
+    letter-spacing: 1px;
+}
+
+.meny-top-section-under-title {
+    color: white;
+    text-shadow: 3px 3px 3px black;
+    margin: 0;
+    letter-spacing: 1px;
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.sort-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.meny-items-section-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-option, .sort-option {
+    padding: 6px 50px;
+    background-color: var(--primary-color);
+    margin: 30px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.category-option:hover, .sort-option:hover {
+    background-color: var(--primary-button-color-hover);
+}
+
+.meny-items-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5%;
+    width: 100%;
+}
+
+.meny-card {
+    background-color: lightgray;
+    width: 250px;
+    height: 300px;
+    display: grid;
+    grid-template-rows: 50px;
+    grid-template-columns: 200px 50px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.meny-title {
+    margin: 0;
+}
+
+.meny-prize {
+    margin: 0;
+}
+
+.meny-description {
+    margin: 0;
+}

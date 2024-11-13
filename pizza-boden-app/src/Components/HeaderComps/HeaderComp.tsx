@@ -8,7 +8,7 @@ function HeaderComp() {
                 <h1 className="navbar-title">Pizzaboden</h1>
                 <ul className="navbar-list">
                     <Link to={'/'}><li className="navbar-item">Hem</li></Link>
-                    <li className="navbar-item">Meny</li>
+                    <Link to={'/MenyPage'}><li className="navbar-item">Meny</li></Link>
                     <li className="navbar-item">Beställ</li>
                     <Link to={'/AboutPage'}><li className="navbar-item">Om oss</li></Link>
                     <li className="navbar-item">Kontakta</li>
