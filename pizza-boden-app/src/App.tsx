@@ -27,4 +27,5 @@ export default App
 /**
  * Författare: Victor
  * Routning till hem och about
+ * Fix: La till routning till meny
  */

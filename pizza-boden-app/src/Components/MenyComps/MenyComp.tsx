@@ -55,3 +55,8 @@ function MenyComp() {
 }
 
 export default MenyComp
+
+/**
+ * Författare: Victor
+ * Design till meny sidan, ska uppdateras med test data senare
+ */

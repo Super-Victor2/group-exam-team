@@ -38,6 +38,7 @@
 .sort-section {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .meny-items-section-wrapper {
@@ -52,6 +53,12 @@
     border-radius: 5px;
     color: white;
     border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.category-option:hover, .sort-option:hover {
+    background-color: var(--primary-button-color-hover);
 }
 
 .meny-items-section {
