@@ -1,5 +1,6 @@
 import './CartComp.css'
 import CartItemImg from '../../assets/pizzzzaaaa.jpg'
+import { Link } from 'react-router-dom';
 
 function CartComp() {
     return (
@@ -32,7 +33,7 @@ function CartComp() {
                             <p className="cart-total-value-text">123kr</p>
                         </aside>
                         <aside className="cart-total-button-wrapper">
-                            <button className="cart-total-btn">Fortsätt</button>
+                            <Link to="/ShipmentInfoPage"><button className="cart-total-btn">Fortsätt</button></Link>
                         </aside>
                     </section>
                 </section>
@@ -42,3 +43,8 @@ function CartComp() {
 }
 
 export default CartComp
+
+/**
+ * Författare: Victor
+ * Design till cart sidan, ska uppdateras med test data senare
+ */
