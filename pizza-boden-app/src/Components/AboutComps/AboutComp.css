@@ -27,3 +27,30 @@
     margin: 20px;
     max-width: 800px;
 }
+
+.about-info-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+    gap: 10%;
+}
+
+.about-info-section-img {
+    width: 30%;
+}
+
+.about-info-section-text {
+    max-width: 500px;
+}
+
+@media screen and (max-width: 1000px) {
+    .about-info-section {
+        flex-direction: column;
+    }
+    .about-info-section-img {
+        margin-bottom: 10%;
+        width: 60%;
+    }
+}

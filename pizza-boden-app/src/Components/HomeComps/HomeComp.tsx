@@ -12,3 +12,8 @@ function HomeComp() {
 }
 
 export default HomeComp
+
+/**
+ * Författare: Victor
+ * Design till hem sidan
+ */

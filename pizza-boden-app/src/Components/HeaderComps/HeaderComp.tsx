@@ -20,3 +20,8 @@ function HeaderComp() {
 }
 
 export default HeaderComp
+
+/**
+ * Författare: Victor
+ * Design till headern och länkar till andra sidor
+ */

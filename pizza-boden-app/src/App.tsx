@@ -21,3 +21,8 @@ function App() {
 }
 
 export default App
+
+/**
+ * Författare: Victor
+ * Routning till hem och about
+ */
