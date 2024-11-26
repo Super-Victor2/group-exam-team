@@ -1,0 +1,94 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: vicke
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: restuarant-api
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: restuarant-api
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  deploymentMethod: direct
+  iam:
+    role: arn:aws:iam::149536467744:role/LambdaDynamoDBRole
+
+functions:
+  GetMenu:
+    handler: functions/GetMenu/index.handler
+    events:
+      - httpApi:
+          path: /menu
+          method: get
+  GetMenuID:
+    handler: functions/GetMenuID/index.handler
+    events:
+      - httpApi:
+          path: /menu/{id}
+          method: get
+  DeleteMenu:
+    handler: functions/DeleteMenu/index.handler
+    events:
+      - httpApi:
+          path: /menu/delete/{id}
+          method: delete
+  CreateOrder:
+    handler: functions/CreateOrder/index.handler
+    events:
+      - httpApi:
+          path: /menu/orders
+          method: post
+  GetOrders:
+    handler: functions/GetOrders/index.handler
+    events:
+      - httpApi:
+          path: /menu/orders
+          method: get
+  GetOrderID:
+    handler: functions/GetOrderID/index.handler
+    events:
+      - httpApi:
+          path: /menu/orders/{id}
+          method: get
+  ConfirmOrder:
+    handler: functions/ConfirmOrder/index.handler
+    events:
+      - httpApi:
+          path: /menu/orders/{id}
+          method: put
+
+resources:
+  Resources:
+    OrderTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: 'restuarant-orders'
+        AttributeDefinitions:
+          - AttributeName: 'orderId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'orderId'
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    MenuTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: 'restuarant-menu'
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    UserTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: 'restuarant-users'
+        AttributeDefinitions:
+          - AttributeName: 'username'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'username'
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
