@@ -10,6 +10,8 @@ provider:
   runtime: nodejs20.x
   region: eu-north-1
   deploymentMethod: direct
+  logs:
+    restApi: true
   iam:
     role: arn:aws:iam::149536467744:role/LambdaDynamoDBRole
 

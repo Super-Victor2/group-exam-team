@@ -3,10 +3,11 @@ import { validateKey } from '../../middlewares/validateKey.mjs';
 import { errorHandler } from '../../middlewares/errorHandler.mjs';
 import { sendResponse } from '../../response/index.mjs';
 import { db } from '../../services/index.mjs';
+import { GetCommand } from '@aws-sdk/lib-dynamodb';
 
 export const handler = middy(async (event) => {
     try {
-        const { id } = event.pathParameters;
+        const id = event.pathParameters?.id;
 
         if (!id) {
             return sendResponse(400, { error: 'Menu item ID is required' });
@@ -14,10 +15,10 @@ export const handler = middy(async (event) => {
 
         const params = {
             TableName: 'restuarant-menu',
-            Key: { id }
+            Key: { id },
         };
 
-        const result = await db.get(params).promise();
+        const result = await db.send(new GetCommand(params));
 
         if (!result.Item) {
             return sendResponse(404, { error: 'Menu item not found' });
@@ -30,7 +31,9 @@ export const handler = middy(async (event) => {
     }
 }).use(errorHandler());
 
+
 /**
  * Författare: Victor
- * Jobbar med att hämta meny med specifikt ID. De blir internal server error just nu.  
+ * Jobbar med att hämta meny med specifikt ID. De blir internal server error just nu.
+ * Buggfix: Fixade så att de går att se specifkt ID. De var db som krånglade
  */
