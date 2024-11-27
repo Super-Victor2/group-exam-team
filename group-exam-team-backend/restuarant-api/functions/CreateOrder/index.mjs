@@ -30,8 +30,7 @@ export const handler = middy(async (event) => {
         console.error('Caught error:', error.message);
         return sendResponse(500, { error: 'Internal Server Error' });
     }
-});
-
+}).use(errorHandler());
 
 /**
  * Författare: Victor
