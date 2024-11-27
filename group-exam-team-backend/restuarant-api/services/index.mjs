@@ -8,3 +8,9 @@ const client = new DynamoDB({
 const db = DynamoDBDocument.from(client);
 
 export { db };
+
+
+/**
+ * Författare: Victor
+ * Här hämtas all data ifrån db.
+ */

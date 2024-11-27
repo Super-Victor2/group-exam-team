@@ -17,3 +17,8 @@ export const handler = middy(async (event) => {
         return sendResponse(500, { error: 'Internal Server Error' });
     }
 }).use(errorHandler());
+
+/**
+ * Författare: Victor
+ * Funkar att hämta menyn från db. 
+ */

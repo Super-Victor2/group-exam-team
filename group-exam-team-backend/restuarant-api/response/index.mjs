@@ -17,3 +17,8 @@ export function sendError(status, data) {
         body: JSON.stringify({success : false, data}),
     };
 }
+
+/**
+ * Författare: Victor
+ * Ett sendResponse och sendError.
+ */

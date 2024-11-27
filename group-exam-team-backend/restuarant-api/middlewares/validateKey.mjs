@@ -14,3 +14,8 @@ export const validateKey = () => ({
         return;
     }
 });
+
+/**
+ * Författare: Victor
+ * Validate key funkar, används inte just nu. Måste se om det ska användas
+ */

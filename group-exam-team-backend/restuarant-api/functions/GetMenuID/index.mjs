@@ -29,3 +29,8 @@ export const handler = middy(async (event) => {
         return sendResponse(500, { error: 'Internal Server Error' });
     }
 }).use(errorHandler());
+
+/**
+ * Författare: Victor
+ * Jobbar med att hämta meny med specifikt ID. De blir internal server error just nu.  
+ */

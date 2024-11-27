@@ -31,3 +31,8 @@ export const handler = middy(async (event) => {
 
 
 }).use(errorHandler());
+
+/**
+ * Författare: Victor
+ * Skapa order till menyn, skapat upp lite grund.
+ */

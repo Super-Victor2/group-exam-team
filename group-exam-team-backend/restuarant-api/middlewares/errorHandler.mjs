@@ -5,3 +5,8 @@ export const errorHandler = () => ({
         handler.response = sendResponse(404, handler.error.message);
     }
 })
+
+/**
+ * Författare: Victor
+ * Error handler för funktioner
+ */
