@@ -36,4 +36,5 @@ export const handler = middy(async (event) => {
  * Författare: Victor
  * Skapa order till menyn, skapat upp lite grund.
  * Buggfix: Bytte id till orderId
+ * Ska fixas: Måste göras så att mer än price och type skickas med.
  */
