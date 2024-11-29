@@ -6,7 +6,7 @@ import { db } from '../../services/index.mjs';
 
 export const handler = middy(async (event) => {
     try {
-        const orderId = event.pathParameters?.orderId;
+        const orderId = event.pathParameters?.id;
 
         if (!orderId) {
             console.error('No orderId provided');
@@ -35,4 +35,5 @@ export const handler = middy(async (event) => {
 /**
  * Författare: Victor
  * Funkar att hämta orders från db i test funktion men inte insomnia. 
+ * Buggfix: bytte ut orderId mot id i pathParameters
  */
