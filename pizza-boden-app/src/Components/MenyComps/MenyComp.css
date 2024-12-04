@@ -72,24 +72,74 @@
 }
 
 .meny-card {
-    background-color: lightgray;
+    background-color: white;
+    background-image: url(C:\Users\ninja\Documents\FU23\group-exam-team\pizza-boden-app\src\assets\pngtree-delicious-pizza-background-material-image_126059.jpg);
+    background-repeat: no-repeat;
+    background-position: right;
     width: 250px;
     height: 300px;
     display: grid;
-    grid-template-rows: 50px;
+    grid-template-rows: 60px 50px;
     grid-template-columns: 200px 50px;
     padding: 10px;
     margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 3px 3px 5px 1px black;
+}
+
+.meny-card:hover {
+    transform: scale(1.05);
 }
 
 .meny-title {
     margin: 0;
+    color: white;
+    margin-top: 2px;
+    font-weight: 600;
 }
 
-.meny-prize {
+.meny-price {
     margin: 0;
+    color: white;
+    margin-top: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
+}
+
+.meny-class-title {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
+}
+
+.meny-description-title {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px black;
 }
 
 .meny-description {
     margin: 0;
+    color: white;
+    font-weight: 300;
+    max-width: 170px;
+    text-shadow: 1px 1px 1px black;
+    margin-top: -10px;
+}
+
+.meny-class {
+    margin: 0;
+    color: white;
+    font-weight: 300;
+    text-shadow: 1px 1px 1px black;
+    margin-top: -10px;
+    text-align: center;
 }

@@ -4,11 +4,18 @@ import { errorHandler } from '../../middlewares/errorHandler.mjs'
 import { sendResponse } from '../../response/index.mjs'
 import { db } from '../../services/index.mjs';
 import { v4 as uuidv4 } from 'uuid';
+import { menuSchema } from '../../models/menuSchema.mjs';
 
 export const handler = middy(async (event) => {
     console.log('Received event:', event);
     try {
         const body = JSON.parse(event.body);
+
+        const { error } = menuSchema.validate(body);
+        if (error) {
+            console.error('Validation error:', error.message);
+            return sendResponse(400, { error: `Validation Error: ${error.message}` });
+        }
 
         const newOrder = {
             orderId: uuidv4(),
@@ -25,7 +32,7 @@ export const handler = middy(async (event) => {
 
         await db.put(params);
 
-        return sendResponse(200, 'Ny order är tillagd');
+        return sendResponse(200, 'New order has been added', newOrder);
     } catch (error) {
         console.error('Caught error:', error.message);
         return sendResponse(500, { error: 'Internal Server Error' });

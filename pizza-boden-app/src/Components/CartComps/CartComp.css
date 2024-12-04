@@ -19,6 +19,15 @@
     gap: 20%;
 }
 
+.empty-text-wrapper {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    align-items: center;
+    height: 300px;
+}
+
 .cart-item-card {
     display: flex;
     flex-direction: row;

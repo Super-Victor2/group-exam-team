@@ -1,6 +1,57 @@
-import './MenyComp.css'
+import { useState, useEffect } from 'react';
+import './MenyComp.css';
+import useStore from '../useStore';
 
-function MenyComp() {
+window.addEventListener('load', () : void => {
+    fetchMenu();
+});
+
+interface menuApiResponse {
+    data: menuCard[];
+}
+
+interface menuCard {
+    id: number;
+    name: string;
+    price: string;
+    ingredients: string[];
+    class: string;
+    quantity: number;
+  }
+
+async function fetchMenu(): Promise<menuCard[]> {
+    try {
+        const response = await fetch("https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu");
+        if (!response.ok) {
+            throw new Error('Error fetching API');
+        } else {
+            const result: menuApiResponse = await response.json();
+            console.log(result);
+            return result.data;
+        }
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+
+const MenyComp = () => {
+    const [menuItems, setMenuItems] = useState<menuCard[]>([]);
+    const addToCart = useStore(state => state.addToCart);
+
+    useEffect(() => {
+        const getMenu = async () => {
+            const items = await fetchMenu();
+            setMenuItems(items);
+        };
+        getMenu();
+    }, []);
+
+    const handleAddToCart = (item: menuCard) => {
+        console.log('Adding item to cart:', item); // Log when the button is clicked
+        addToCart(item); // Add the item to the store
+    };
+
     return (
         <>
             <section className="meny-section">
@@ -16,45 +67,29 @@ function MenyComp() {
                         <button className="sort-option">Sortera</button>
                     </section>
                     <section className="meny-items-section">
-                        <div className="meny-card">
-                            <h2 className="meny-title">Pizza</h2>
-                            <p className="meny-prize">59kr</p>
-                            <p className="meny-description">Pizza!</p>
-                        </div>
-                        <div className="meny-card">
-                            <h2 className="meny-title">Pizza</h2>
-                            <p className="meny-prize">59kr</p>
-                            <p className="meny-description">Pizza!</p>
-                        </div>
-                        <div className="meny-card">
-                            <h2 className="meny-title">Pizza</h2>
-                            <p className="meny-prize">59kr</p>
-                            <p className="meny-description">Pizza!</p>
-                        </div>
-                        <div className="meny-card">
-                            <h2 className="meny-title">Pizza</h2>
-                            <p className="meny-prize">59kr</p>
-                            <p className="meny-description">Pizza!</p>
-                        </div>
-                        <div className="meny-card">
-                            <h2 className="meny-title">Pizza</h2>
-                            <p className="meny-prize">59kr</p>
-                            <p className="meny-description">Pizza!</p>
-                        </div>
-                        <div className="meny-card">
-                            <h2 className="meny-title">Pizza</h2>
-                            <p className="meny-prize">59kr</p>
-                            <p className="meny-description">Pizza!</p>
-                        </div>
+                        {menuItems.length > 0 ? (
+                            menuItems.map(item => (
+                                <div key={item.id} className="meny-card" onClick={() => handleAddToCart(item)}>
+                                    <h2 className="meny-title">{item.name}</h2>
+                                    <p className="meny-price">{item.price}</p>
+                                    <p className="meny-description-title">Ingredienser</p>
+                                    <p className="meny-class-title">Class</p>
+                                    <p className="meny-description">{item.ingredients}</p>
+                                    <p className="meny-class">{item.class}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>Loading menu...</p>
+                        )}
                     </section>
                 </section>
-                
             </section>
         </>
-    )
-}
+    );
+};
 
-export default MenyComp
+export default MenyComp;
+
 
 /**
  * Författare: Victor
