@@ -8,6 +8,7 @@ import MenyPage from './Pages/MenuPage/MenyPage'
 import CartPage from './Pages/CartPage/CartPage'
 import ShipmentInfoPage from './Pages/ShipmentInfoPage/ShipmentInfoPage'
 import ConfirmPage from './Pages/ConfirmPage/ConfirmPage'
+import OrdersPage from './Pages/OrdersPage/OrderPage'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/CartPage' element={<CartPage />} />
           <Route path='/ShipmentInfoPage' element={<ShipmentInfoPage />} />
           <Route path='/ConfirmPage' element={<ConfirmPage />} />
+          <Route path='/OrdersPage' element={<OrdersPage />} />
       </Routes>
     </div>
     </>

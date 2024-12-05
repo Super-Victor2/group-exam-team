@@ -23,6 +23,8 @@ export const handler = middy(async (event) => {
             ingredients: body.ingredients,
             type: body.type,
             price: body.price,
+            class: body.class,
+            quantity: body.quantity
         };
 
         const params = {

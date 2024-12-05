@@ -1,0 +1,88 @@
+/* Orders Styling */
+
+.order-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.order-section-title {
+    font-weight: 300;
+    font-size: 46px;
+    letter-spacing: 1px;
+}
+
+.order-section-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20%;
+}
+
+/* Styling for cards */
+
+.order-card {
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+    height: 100px;
+    border: 1px solid var(--primary-color);
+    margin-top: 55px;
+}
+
+/* Card img */ 
+
+.order-card-img {
+    width: 100px;
+}
+
+/* Styling for the card info (No img) */
+
+.order-card-wrapper {
+    display: grid;
+    grid-template-columns: 200px 100px 100px 100px;
+    grid-template-rows: 50px 50px;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+/* Card name */
+
+.order-card-name {
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+/* Card ingredients */
+
+.order-card-ingredients {
+    font-size: 16px;
+    grid-column: 1 / -5;
+    grid-row: 2;
+}
+
+/* Styling for quantity */
+
+.order-card-quantity {
+    font-size: 16px;
+    grid-column: 2 / -3;
+    grid-row: 2;
+}
+
+/* Styling for price */
+
+.order-item-card-price {
+    grid-column: 3 / -2;
+    grid-row: 2;
+}
+
+/* Cart remove icon */
+
+.order-remove-item-icon {
+    cursor: pointer;
+    grid-column: 4 / -2;
+    grid-row: 1;
+}
