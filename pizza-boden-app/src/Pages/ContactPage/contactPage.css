@@ -1,0 +1,34 @@
+
+.meny-top-section {
+    background-image: url('../../assets/To-ContactPage.png');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .contact-item {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .contact-item h2 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+  
+  .contact-item p {
+    font-size: 1.2em;
+    color: #333;
+  }
+  

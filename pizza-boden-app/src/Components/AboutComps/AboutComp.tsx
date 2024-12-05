@@ -1,5 +1,5 @@
 import './AboutComp.css'
-import AboutImg from '../../assets/image.png'
+import AboutImg from '../../assets/pizza-4968645_1280.jpg';
 
 function AboutComp() {
     return (

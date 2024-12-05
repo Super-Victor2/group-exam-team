@@ -10,7 +10,7 @@ function HeaderComp() {
                     <Link to={'/'}><li className="navbar-item">Hem</li></Link>
                     <Link to={'/MenyPage'}><li className="navbar-item">Meny</li></Link>
                     <Link to={'/AboutPage'}><li className="navbar-item">Om oss</li></Link>
-                    <li className="navbar-item">Kontakta</li>
+                    <Link to={'/ContactPage'}><li className="navbar-item">Kontakta</li></Link>
                     <Link to={'/CartPage'}><i className="navbar-item fa-solid fa-cart-shopping"></i></Link>
                     
                 </ul>
