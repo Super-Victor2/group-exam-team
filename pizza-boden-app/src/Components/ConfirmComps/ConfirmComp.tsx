@@ -1,7 +1,10 @@
 import './ConfirmComp.css'
 import { Link } from 'react-router-dom';
+import useStore from '../useStore';
 
 function ConfirmComp() {
+    const cart = useStore((state) => state.cart);
+    
     return (
         <>
             <section className="confirm-section">
@@ -20,7 +23,24 @@ function ConfirmComp() {
                     <aside className="confirm-section-order-overview-items-wrapper">
                         <p className="order-overview-items-title">Varor</p>
                         <aside className="order-overview-items-wrapper">
-                            <p className="order-overview-item">1st Vara namn</p>
+                            {cart.length > 0 ? (
+                                cart.map((item) => (
+                                    <div key={item.id} className='order-overview-items'>
+                                        <p className="order-overview-item-name-title">Namn</p>
+                                        <p className="order-overview-item-name-title">Antal</p>
+                                        <p className="order-overview-item-name-title">Klass</p>
+                                        <p className="order-overview-item-name-title">Pris</p>
+                                        <p className="order-overview-item-name">{item.name}</p>
+                                        <p className="order-overview-item-name">{item.quantity}</p>
+                                        <p className="order-overview-item-name">{item.class}</p>
+                                        <p className="order-overview-item-name">{item.totalPrice}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="empty-overview-items">
+                                    <p className="empty-overview-items-text">Inga varor här</p>
+                                </div>
+                            )}
                         </aside>
                     </aside>
                 </section>

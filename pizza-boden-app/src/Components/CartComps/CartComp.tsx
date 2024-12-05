@@ -6,19 +6,25 @@ import useStore from '../useStore';
 function CartComp() {
     const cart = useStore((state) => state.cart);
     const removeFromCart = useStore((state) => state.removeFromCart);
-    const updateQuantity = useStore((state) => state.updateQuantity); // Get updateQuantity from store
+    const updateQuantity = useStore((state) => state.updateQuantity);
 
     const handleIncrement = (id: number, quantity: number) => {
-        // Increment the quantity of a specific item
         updateQuantity(id, quantity + 1);
     };
 
     const handleDecrement = (id: number, quantity: number) => {
-        // Decrement the quantity of a specific item if quantity > 1
         if (quantity > 1) {
             updateQuantity(id, quantity - 1);
         }
     };
+
+    const totalCartValue = cart.reduce(
+        (total, item) => total + parseFloat(item.totalPrice),
+        0
+    );
+
+    const shippingCost = cart.length > 0 ? 59 : 0;
+    const finalTotal = totalCartValue + shippingCost;
 
     return (
         <section className="cart-section">
@@ -28,36 +34,22 @@ function CartComp() {
                     {cart.length > 0 ? (
                         cart.map((item) => (
                             <div key={item.id} className="cart-item-card">
-                                <img
-                                    className="cart-item-card-img"
-                                    src={CartItemImg}
-                                    alt="cart-img"
-                                />
+                                <img className="cart-item-card-img" src={CartItemImg} alt="cart-img" />
                                 <aside className="cart-item-card-items-wrapper">
                                     <p className="cart-item-card-name">{item.name}</p>
                                     <aside className="items-selected-wrapper">
-                                        <i
-                                            onClick={() => handleDecrement(item.id, item.quantity)}
-                                            className="cart-item cart-item-icon fa-solid fa-minus"
-                                        ></i>
-                                        <p className="cart-item cart-item-card-items-selected">
-                                            {item.quantity} {/* Display item quantity */}
-                                        </p>
-                                        <i
-                                            onClick={() => handleIncrement(item.id, item.quantity)}
-                                            className="cart-item cart-item-icon fa-solid fa-plus"
-                                        ></i>
+                                        <i onClick={() => handleDecrement(item.id, item.quantity)} className="cart-item cart-item-icon fa-solid fa-minus"></i>
+                                        <p className="cart-item cart-item-card-items-selected">{item.quantity}</p>
+                                        <i onClick={() => handleIncrement(item.id, item.quantity)} className="cart-item cart-item-icon fa-solid fa-plus"></i>
                                     </aside>
-                                    <p className="cart-item-card-price">{item.price}</p>
-                                    <button onClick={() => removeFromCart(item.id)}>
-                                        Remove
-                                    </button>
+                                    <p className="cart-item-card-price">{item.totalPrice} kr</p>
+                                    <i onClick={() => removeFromCart(item.id)} className="cart-remove-item-icon fa-solid fa-x"></i>
                                 </aside>
                             </div>
                         ))
                     ) : (
                         <div className="empty-text-wrapper">
-                            <p className='empty-cart-text'>Your cart is empty</p>
+                            <p className="empty-cart-text">Your cart is empty</p>
                         </div>
                     )}
                 </aside>
@@ -65,14 +57,14 @@ function CartComp() {
                     <h2 className="cart-total-value-title">Summering</h2>
                     <aside className="cart-total-value-text-wrapper">
                         <p className="cart-total-value-text">Summa:</p>
-                        <p className="cart-total-value-text">123kr</p>
+                        <p className="cart-total-value-text">{totalCartValue} kr</p>
                         <p className="cart-total-value-text">Frakt:</p>
-                        <p className="cart-total-value-text">59kr</p>
+                        <p className="cart-total-value-text">{shippingCost} kr</p>
                         <p className="cart-total-value-text">Total summa:</p>
-                        <p className="cart-total-value-text">123kr</p>
+                        <p className="cart-total-value-text">{finalTotal} kr</p>
                     </aside>
                     <aside className="cart-total-button-wrapper">
-                        <Link to="/ShipmentInfoPage">
+                        <Link className='cart-total-btn-link' to="/ShipmentInfoPage">
                             <button className="cart-total-btn">Fortsätt</button>
                         </Link>
                     </aside>

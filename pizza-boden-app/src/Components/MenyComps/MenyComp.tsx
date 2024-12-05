@@ -17,7 +17,8 @@ interface menuCard {
     ingredients: string[];
     class: string;
     quantity: number;
-  }
+    totalPrice: string;
+}
 
 async function fetchMenu(): Promise<menuCard[]> {
     try {
@@ -48,8 +49,8 @@ const MenyComp = () => {
     }, []);
 
     const handleAddToCart = (item: menuCard) => {
-        console.log('Adding item to cart:', item); // Log when the button is clicked
-        addToCart(item); // Add the item to the store
+        console.log('Adding item to cart:', item);
+        addToCart(item); 
     };
 
     return (

@@ -6,7 +6,7 @@ function HomeComp() {
         <>
             <section className="home-section">
                 <h1 className="home-section-title">Pizzaboden</h1>
-                <Link to="/MenyPage"><button className="home-section-btn">Meny</button></Link>
+                <Link className='home-section-btn-link' to="/MenyPage"><button className="home-section-btn">Meny</button></Link>
             </section>
         </>
     )

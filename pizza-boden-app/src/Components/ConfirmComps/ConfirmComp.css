@@ -35,8 +35,23 @@
     border: 1px solid var(--primary-color);
 }
 
-.order-overview-item {
+.order-overview-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 40px 55px;
+}
+
+.order-overview-item-name-title {
     margin-left: 15px;
+    font-weight: 600;
+}
+
+.order-overview-item-name {
+    margin-left: 15px;
+}
+
+.empty-overview-items-text {
+    text-align: center;
 }
 
 .confirm-section-button {
