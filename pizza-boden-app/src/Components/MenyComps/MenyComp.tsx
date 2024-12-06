@@ -26,6 +26,7 @@ interface sendOrder {
     price: string;
     class: string;
     quantity: number;
+    id: number;
 }
 
 async function fetchMenu(): Promise<menuCard[]> {
@@ -55,6 +56,8 @@ async function sendOrder(order: sendOrder): Promise<void> {
             },
             body: JSON.stringify(order)
         });
+
+        console.log(response)
 
         if (!response.ok) {
             throw new Error('Error posting order');
@@ -105,6 +108,7 @@ const MenyComp = () => {
                                         price: item.price,
                                         class: item.class,
                                         quantity: 1,
+                                        id: 1,
                                     };
                                     sendOrder(order);
                                 }}>

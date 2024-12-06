@@ -18,6 +18,7 @@ interface orderCard {
     price: string;
     class: string;
     quantity: number;
+    id: number;
 }
 
 async function fetchOrders(): Promise<orderCard[]> {
@@ -54,7 +55,7 @@ function CartComp() {
                 <aside className="cart-items">
                     {orderItems.length > 0 ? (
                         orderItems.map(item => (
-                            <div key={item.name} className="cart-item-card">
+                            <div key={item.id} className="cart-item-card">
                                 <img className="cart-item-card-img" src={CartItemImg} alt="cart-img" />
                                 <aside className="cart-item-card-items-wrapper">
                                     <p className="cart-item-card-name">{item.name}</p>

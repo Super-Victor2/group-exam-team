@@ -1,34 +1,37 @@
 import middy from '@middy/core';
-import { validateKey } from '../../middlewares/validateKey.mjs';
-import { errorHandler } from '../../middlewares/errorHandler.mjs'
-import { sendResponse } from '../../response/index.mjs'
+import { errorHandler } from '../../middlewares/errorHandler.mjs';
+import { sendResponse } from '../../response/index.mjs';
 import { db } from '../../services/index.mjs';
 
 export const handler = middy(async (event) => {
     try {
+        console.log('Received Event:', JSON.stringify(event, null, 2));
 
-        const { id } = JSON.parse(event.body)
+        const orderId = event.pathParameters?.id;
 
-        console.log('Event Body:', event.body);
-
-        if (!event.body) {
-            return sendResponse(400, { error: 'Request body is required' });
+        if (!orderId) {
+            console.error('No orderId provided');
+            return sendResponse(400, { error: 'Order item ID is required' });
         }
 
-        if (!id) {
-            return sendResponse(400, { error: 'ID is required' });
-        }
+        console.log('Deleting order with ID:', orderId);
 
         const params = {
             TableName: 'restuarant-orders',
-            Key: { id }
+            Key: { orderId },
         };
 
         await db.delete(params);
 
-        return sendResponse(200, 'Order borttagen');
+        console.log('Order deleted successfully:', orderId);
+        return sendResponse(200, { message: 'Order borttagen' });
     } catch (error) {
-        console.log(error)
+        console.error('Error occurred:', error);
         return sendResponse(500, { error: 'Internal Server Error' });
     }
 }).use(errorHandler());
+
+/**
+ * Författare: Victor
+ * kan ta bort orders med orderId
+ */
