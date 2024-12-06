@@ -62,7 +62,7 @@ functions:
     handler: functions/LogIn/index.handler
     events:
       - httpApi:
-          path: /menu/users/
+          path: /menu/users
           method: get
 
 resources:
