@@ -63,7 +63,7 @@ functions:
     events:
       - httpApi:
           path: /menu/users
-          method: get
+          method: post
 
 resources:
   Resources:

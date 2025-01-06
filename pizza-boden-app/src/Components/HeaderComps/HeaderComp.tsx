@@ -12,6 +12,7 @@ function HeaderComp() {
                     <Link to={'/OrdersPage'}><li className="navbar-item">Beställningar</li></Link>
                     <Link to={'/AboutPage'}><li className="navbar-item navbar-item-about">Om oss</li></Link>
                     <li className="navbar-item">Kontakta</li>
+                    <Link to={'/LogInPage'}><li className="navbar-item navbar-item-login">Login</li></Link>
                     <Link to={'/CartPage'}><i className="navbar-item fa-solid fa-cart-shopping"></i></Link>
                 </ul>
                 <i className="menu fa-solid fa-bars"></i>

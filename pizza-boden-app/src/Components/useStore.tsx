@@ -3,8 +3,9 @@ import { create } from 'zustand';
 interface MenuCard {
   id: number;
   name: string;
-  price: string;
   ingredients: string[];
+  type: string,
+  price: string;
   class: string;
   quantity: number;
   totalPrice: string;

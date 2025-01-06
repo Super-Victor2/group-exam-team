@@ -1,0 +1,38 @@
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-section-title {
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.login-section-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.username-input {
+
+}
+
+.login-btn {
+    margin-top: 10px;
+    padding: 10px 50px;
+    background-color: var(--primary-button-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+    background-color: var(--primary-button-color-hover);
+}

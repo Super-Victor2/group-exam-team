@@ -1,25 +1,32 @@
 import './OrderComp.css'
 import { useEffect, useState } from 'react';
-import CartItemImg from '../../assets/pizzzzaaaa.jpg';
 
 window.addEventListener('load', () : void => {
     fetchOrders();
 });
 
 interface orderApiResponse {
-    data: orderCard[];
+    data: orderResponse[];
+}
+
+interface orderResponse {
+    items: orderCard[];
+    orderId: string;
+    totalPrice: string;
 }
 
 interface orderCard {
+    id: number;
     name: string;
     ingredients: string[];
-    type: string,
+    type: string;
     price: string;
     class: string;
     quantity: number;
+    totalPrice: string;
 }
 
-async function fetchOrders(): Promise<orderCard[]> {
+async function fetchOrders(): Promise<orderResponse[]> {
     try {
         const response = await fetch("https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/orders");
         if (!response.ok) {
@@ -36,7 +43,7 @@ async function fetchOrders(): Promise<orderCard[]> {
 }
 
 function OrderComp() {
-    const [orderItems, SetOrderItems] = useState<orderCard[]>([]);
+    const [orderItems, SetOrderItems] = useState<orderResponse[]>([]);
     
     useEffect(() => {
         const getOrders = async () => {
@@ -52,16 +59,20 @@ function OrderComp() {
             <section className="order-section-wrapper">
                 <aside className="order-items">
                     {orderItems.length > 0 ? (
-                        orderItems.map(item => (
-                            <div key={item.name} className="order-card">
-                                <img className="order-card-img" src={CartItemImg} alt="cart-img" />
-                                <aside className="order-card-wrapper">
-                                    <p className="order-card-name">{item.name}</p>
-                                    <p className="order-card-ingredients">{item.ingredients}</p>
-                                    <p className="order-card-quantity">{item.quantity}</p>
-                                    <p className="order-item-card-price">{item.price}</p>
-                                    <i className="order-remove-item-icon fa-solid fa-x"></i>
-                                </aside>
+                        orderItems.map(order => (
+                            <div key={order.orderId} className="order-card">
+                                <h2 className="order-card-id">Order ID: {order.orderId}</h2>
+                                {order.items.map(item => (
+                                    <div key={item.id} className="order-item">
+                                        <aside className="order-card-wrapper">
+                                            <p className="order-card-name">{item.name}</p>
+                                            <p className="order-card-ingredients">{item.ingredients.join(', ')}</p>
+                                            <p className="order-card-quantity">Quantity: {item.quantity}</p>
+                                            <p className="order-item-card-price">{item.price}</p>
+                                        </aside>
+                                    </div>
+                                ))}
+                                <p className="order-total-price">Total Price: {order.totalPrice}</p>
                             </div>
                         ))
                     ) : (
@@ -75,4 +86,4 @@ function OrderComp() {
     );
 }
 
-export default OrderComp
+export default OrderComp;

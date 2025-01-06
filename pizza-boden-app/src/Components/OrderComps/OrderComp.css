@@ -25,28 +25,33 @@
 
 .order-card {
     display: flex;
-    flex-direction: row;
-    width: 600px;
-    height: 100px;
+    flex-direction: column;
+    width: 500px;
     border: 1px solid var(--primary-color);
     margin-top: 55px;
 }
 
-/* Card img */ 
+/* Styling for the card info */
 
-.order-card-img {
-    width: 100px;
+.order-card-id {
+    margin-left: 15px;
+    font-size: 18px;
+    font-weight: 500;
 }
-
-/* Styling for the card info (No img) */
 
 .order-card-wrapper {
     display: grid;
     grid-template-columns: 200px 100px 100px 100px;
     grid-template-rows: 50px 50px;
     justify-content: center;
-    justify-items: center;
     align-items: center;
+    margin-left: 30px;
+}
+
+.order-total-price {
+    margin-left: 15px;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 /* Card name */

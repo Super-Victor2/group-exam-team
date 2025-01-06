@@ -1,51 +1,79 @@
 import './ConfirmComp.css'
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import useStore from '../useStore';
 
-window.addEventListener('load', () : void => {
-    fetchOrders();
-});
-
-interface orderApiResponse {
-    data: orderCard[];
+interface OrderApiResponse {
+    message: string;
+    order: Order;
 }
 
-interface orderCard {
+interface Order {
+    orderId: string;
+    items: sendOrder[];
+    totalPrice: string;
+}
+
+interface sendOrder {
+    id: number;
     name: string;
     ingredients: string[];
-    type: string,
+    type: string;
     price: string;
     class: string;
     quantity: number;
 }
 
-async function fetchOrders(): Promise<orderCard[]> {
+async function sendOrderToDb(order: Order): Promise<void> {
     try {
-        const response = await fetch("https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/orders");
+        console.log("Sending order with ID:", order.orderId, "and items:", order.items);
+
+        console.log("Order:", JSON.stringify(order, null, 2));
+
+        const response = await fetch('https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(order)
+        });
+
+        console.log(response);
+
         if (!response.ok) {
-            throw new Error('Error fetching API');
+            const result = await response.json();
+            throw new Error(result.error || 'Error posting order');
         } else {
-            const result: orderApiResponse = await response.json();
-            console.log(result);
-            return result.data;
+            const result: OrderApiResponse = await response.json();
+            console.log('Order placed successfully', result);
         }
     } catch (error) {
-        console.log(error);
-        return [];
+        console.log('Error in sending order:', error);
     }
 }
 
+
 function ConfirmComp() {
-    const [orderItems, SetOrderItems] = useState<orderCard[]>([]);
-    
-    useEffect(() => {
-        const getOrders = async () => {
-            const items = await fetchOrders();
-            SetOrderItems(items);
-        }
-        getOrders();
-    }, []);
-    
+    const cart = useStore((state) => state.cart);
+
+    const handleSubmitOrder = () => {
+        const orderId = Date.now().toString();
+
+        const order: Order = {
+            orderId,
+            items: cart.map((item) => ({
+                id: item.id,
+                name: item.name,
+                ingredients: item.ingredients || [],
+                type: item.type,
+                price: item.price,
+                class: item.class,
+                quantity: item.quantity,
+            })),
+            totalPrice: (cart.reduce((total, item) => total + parseFloat(item.totalPrice.replace('kr', '')), 0)).toFixed(0) + "kr", // Add 'kr' suffix
+        };
+        sendOrderToDb(order);
+    };
+
     return (
         <>
             <section className="confirm-section">
@@ -64,9 +92,9 @@ function ConfirmComp() {
                     <aside className="confirm-section-order-overview-items-wrapper">
                         <p className="order-overview-items-title">Varor</p>
                         <aside className="order-overview-items-wrapper">
-                            {orderItems.length > 0 ? (
-                                orderItems.map((item) => (
-                                    <div key={item.name} className='order-overview-items'>
+                            {cart.length > 0 ? (
+                                cart.map((item) => (
+                                    <div key={item.id} className='order-overview-items'>
                                         <p className="order-overview-item-name-title">Namn</p>
                                         <p className="order-overview-item-name-title">Antal</p>
                                         <p className="order-overview-item-name-title">Klass</p>
@@ -74,7 +102,7 @@ function ConfirmComp() {
                                         <p className="order-overview-item-name">{item.name}</p>
                                         <p className="order-overview-item-name">{item.quantity}</p>
                                         <p className="order-overview-item-name">{item.class}</p>
-                                        <p className="order-overview-item-name">{item.price}</p>
+                                        <p className="order-overview-item-name">{item.totalPrice}</p>
                                     </div>
                                 ))
                             ) : (
@@ -85,17 +113,13 @@ function ConfirmComp() {
                         </aside>
                     </aside>
                 </section>
-                <button className="confirm-section-button">Godkänn</button>
+                <button
+                    className="confirm-section-button" onClick={handleSubmitOrder}>Godkänn</button>
+
                 <Link to="/ShipmentInfoPage"><button className="confirm-section-button">Tillbaka</button></Link>
-                
             </section>
         </>
-    )
+    );
 }
 
-export default ConfirmComp
-
-/**
- * Författare: Victor
- * Design till bekräftelse sidan, ska uppdateras med test data senare
- */
+export default ConfirmComp;
