@@ -1,16 +1,31 @@
 import middy from '@middy/core';
-import { errorHandler } from '../../middlewares/errorHandler.mjs'
+import { errorHandler } from '../../middlewares/errorHandler.mjs';
 import { sendResponse } from '../../response/index.mjs';
 import { db } from '../../services/index.mjs';
 import { v4 as uuidv4 } from 'uuid';
+import { userSchema } from '../../models/userSchema.mjs';
 
 export const handler = middy(async (event) => {
-    console.log('Received event:', event);
-    try {
-        const { username, password } = JSON.parse(event.body);
+    console.log('Received event:', JSON.stringify(event, null, 2));
 
-        if (!username || !password) {
-            return sendResponse(400, { error: 'Username and password are required' });
+    let body;
+    try {
+        if (!event.body) {
+            console.error('Event body is undefined');
+            return sendResponse(400, { error: 'Request body is required' });
+        }
+
+        body = JSON.parse(event.body);
+    } catch (err) {
+        console.error('Invalid JSON in request body:', event.body);
+        return sendResponse(400, { error: 'Invalid JSON in request body' });
+    }
+
+    try {
+        const { error } = userSchema.validate(body);
+        if (error) {
+            console.error('Validation error:', error.message);
+            return sendResponse(400, { error: `Validation Error: ${error.message}` });
         }
 
         const userId = body.userId || uuidv4();
@@ -18,27 +33,19 @@ export const handler = middy(async (event) => {
             userId,
             username: body.username,
             password: body.password,
-        }
+            role: body.role
+        };
 
         const params = {
             TableName: 'restuarant-user',
-            user: newLogin,
+            Item: newLogin,
         };
 
-        await db.put(params)
+        await db.put(params);
 
-        if (result.Items.length === 0) {
-            return sendResponse(401, { error: 'Invalid username or password' });
-        }
-
-        const user = result.Items[0];
-
-        if (user.password !== password) {
-            return sendResponse(401, { error: 'Invalid username or password' });
-        }
-
-        return sendResponse(200, { message: 'Login successful', user: { username: user.username } });
+        return sendResponse(200, 'Login successful', newLogin);
     } catch (error) {
-        return sendResponse(500, { error: 'Internal Server Error' });
+        console.error('Caught error:', error);
+        return sendResponse(500, { error: error.message || 'Internal Server Error' });
     }
 }).use(errorHandler());
