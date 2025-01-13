@@ -62,7 +62,13 @@ functions:
     handler: functions/LogIn/index.handler
     events:
       - httpApi:
-          path: /menu/users
+          path: /menu/users/login
+          method: get
+  SignIn:
+    handler: functions/SignIn/index.handler
+    events:
+      - httpApi:
+          path: /menu/users/signin
           method: post
 
 resources:
@@ -92,11 +98,11 @@ resources:
     UserTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: 'restuarant-user'
+        TableName: 'restuarant-guest'
         AttributeDefinitions:
-          - AttributeName: 'userId'
+          - AttributeName: 'username'
             AttributeType: 'S'
         KeySchema:
-          - AttributeName: 'userId'
+          - AttributeName: 'username'
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST

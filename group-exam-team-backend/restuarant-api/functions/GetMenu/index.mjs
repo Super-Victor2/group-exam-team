@@ -5,6 +5,7 @@ import { sendResponse } from '../../response/index.mjs'
 import { db } from '../../services/index.mjs';
 
 export const handler = middy(async (event) => {
+    console.log('Received event:', JSON.stringify(event, null, 2));
     try {
         const params = {
             TableName: 'restuarant-menu',

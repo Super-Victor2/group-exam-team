@@ -4,48 +4,69 @@ import { sendResponse } from '../../response/index.mjs';
 import { db } from '../../services/index.mjs';
 import { v4 as uuidv4 } from 'uuid';
 import { userSchema } from '../../models/userSchema.mjs';
+import { comparePasswords, hashpassword } from '../../utils/index.mjs';
 
 export const handler = middy(async (event) => {
     console.log('Received event:', JSON.stringify(event, null, 2));
-
-    let body;
     try {
-        if (!event.body) {
-            console.error('Event body is undefined');
-            return sendResponse(400, { error: 'Request body is required' });
+        let body = event.body;
+        if (typeof body === 'string') {
+            body = JSON.parse(event.body);
         }
 
-        body = JSON.parse(event.body);
-    } catch (err) {
-        console.error('Invalid JSON in request body:', event.body);
-        return sendResponse(400, { error: 'Invalid JSON in request body' });
-    }
+        const { username, password, role } = body;
 
-    try {
         const { error } = userSchema.validate(body);
+        console.log('Validation result:', error);
         if (error) {
             console.error('Validation error:', error.message);
             return sendResponse(400, { error: `Validation Error: ${error.message}` });
         }
 
-        const userId = body.userId || uuidv4();
+        const adminUser = {
+            username: "admin",
+            password: await hashpassword("admin"),
+            role: "admin"
+        };
+
+        if (!role || !username || !password) {
+            console.error('Missing required fields');
+            throw new Error('Missing required fields: username, password, and role');
+        }
+
+        const isEqual = await comparePasswords(password, adminUser.password);
+
+        if (role === 'admin' && (username !== adminUser.username || !isEqual)) {
+            console.error('Invalid admin credentials or permission denied');
+            throw new Error('Invalid admin credentials or permission denied');
+        }
+        
         const newLogin = {
-            userId,
-            username: body.username,
-            password: body.password,
-            role: body.role
+            username,
+            password,
+            role,
         };
 
         const params = {
-            TableName: 'restuarant-user',
-            Item: newLogin,
+            TableName: 'restuarant-guest',
+            KeyConditionExpression: 'username = :username',
+            ExpressionAttributeValues: {
+                ':username': username,
+            },
         };
 
-        await db.put(params);
+        const result = await db.query(params);
 
-        return sendResponse(200, 'Login successful', newLogin);
+        console.log('DB query result:', result);
+
+
+        if (!result.Items.length) {
+            return sendResponse(404, { error: 'User not found' });
+        }
+
+        return sendResponse(200, { message: 'Login successful', result, newLogin });
     } catch (error) {
-        console.error('Caught error:', error);
-        return sendResponse(500, { error: error.message || 'Internal Server Error' });
+        console.error('Error during login:', error);
+        return sendResponse(500, { error: 'Internal Server Error' });
     }
 }).use(errorHandler());
