@@ -1,10 +1,10 @@
 import middy from '@middy/core';
 import { errorHandler } from '../../middlewares/errorHandler.mjs';
-import { sendResponse } from '../../response/index.mjs';
+import { sendResponse, sendResponseWithHeaders } from '../../response/index.mjs';
 import { db } from '../../services/index.mjs';
 import { v4 as uuidv4 } from 'uuid';
 import { userSchema } from '../../models/userSchema.mjs';
-import { comparePasswords, hashpassword } from '../../utils/index.mjs';
+import { comparePasswords, hashpassword, generateJWT } from '../../utils/index.mjs';
 
 export const handler = middy(async (event) => {
     console.log('Received event:', JSON.stringify(event, null, 2));
@@ -40,6 +40,9 @@ export const handler = middy(async (event) => {
             console.error('Invalid admin credentials or permission denied');
             throw new Error('Invalid admin credentials or permission denied');
         }
+
+        const token = generateJWT(JSON.parse(event.body));
+        console.log('token', token)
         
         const newLogin = {
             username,
@@ -49,22 +52,16 @@ export const handler = middy(async (event) => {
 
         const params = {
             TableName: 'restuarant-guest',
-            KeyConditionExpression: 'username = :username',
-            ExpressionAttributeValues: {
-                ':username': username,
-            },
+            Item: newLogin,
         };
 
-        const result = await db.query(params);
+        await db.put(params);
 
-        console.log('DB query result:', result);
-
-
-        if (!result.Items.length) {
+        if (!params.Item || Object.keys(params.Item).length === 0) {
             return sendResponse(404, { error: 'User not found' });
         }
 
-        return sendResponse(200, { message: 'Login successful', result, newLogin });
+        return sendResponseWithHeaders(200, { message: 'Login successful', newLogin, token });
     } catch (error) {
         console.error('Error during login:', error);
         return sendResponse(500, { error: 'Internal Server Error' });

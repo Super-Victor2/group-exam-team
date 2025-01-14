@@ -1,3 +1,5 @@
+// const cspHeader = "";
+
 export function sendResponse(status, data) {
     return {
         statusCode: status,
@@ -17,6 +19,21 @@ export function sendError(status, data) {
         body: JSON.stringify({success : false, data}),
     };
 }
+
+export const sendResponseWithHeaders = (statusCode, body, token) => {
+    return {
+        statusCode: statusCode,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : token,
+            // 'Content-Security-Policy': cspHeader,
+        }, 
+        body: JSON.stringify({
+            data: body,
+            token: token
+        }),
+    };
+};
 
 /**
  * Författare: Victor

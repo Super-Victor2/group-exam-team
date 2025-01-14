@@ -63,7 +63,7 @@ functions:
     events:
       - httpApi:
           path: /menu/users/login
-          method: get
+          method: post
   SignIn:
     handler: functions/SignIn/index.handler
     events:
