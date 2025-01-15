@@ -52,8 +52,8 @@ functions:
       - httpApi:
           path: /menu/orders/{id}
           method: get
-  ConfirmOrder:
-    handler: functions/ConfirmOrder/index.handler
+  UpdateOrder:
+    handler: functions/UpdateOrder/index.handler
     events:
       - httpApi:
           path: /menu/orders/{id}

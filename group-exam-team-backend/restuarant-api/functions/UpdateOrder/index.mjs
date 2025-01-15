@@ -2,7 +2,7 @@ import middy from '@middy/core';
 import { errorHandler } from '../../middlewares/errorHandler.mjs'
 import { sendResponse } from '../../response/index.mjs'
 import { db } from '../../services/index.mjs';
-import { validateToken } from '../../middlewares/validateToken.mjs';
+import { validateTokenAdmin } from '../../middlewares/validateTokenAdmin.mjs';
 
 export const handler = middy(async (event) => {
     try {
@@ -18,23 +18,11 @@ export const handler = middy(async (event) => {
             Key : { orderId },
         };
 
-        const result = await db.get(params);
-        console.log('DynamoDB result:', result);
+        const result = await db.scan(params);
 
-        if (!result.Item) {
-            return sendResponse(404, { error: 'Order item not found' });
-        }
-
-        return sendResponse(200, result.Item);
+        return sendResponse(200, result.Items);
     } catch(error) {
-        console.error('Error fetching order item:', error);
-        throw error
+        return sendResponse(500, { error: 'Internal Server Error' });
     }
 }).use(errorHandler())
-  .use(validateToken());
-
-/**
- * Författare: Victor
- * Funkar att hämta orders från db i test funktion men inte insomnia. 
- * Buggfix: bytte ut orderId mot id i pathParameters
- */
+  .use(validateTokenAdmin());

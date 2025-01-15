@@ -2,7 +2,6 @@ import middy from '@middy/core';
 import { errorHandler } from '../../middlewares/errorHandler.mjs';
 import { sendResponse, sendResponseWithHeaders } from '../../response/index.mjs';
 import { db } from '../../services/index.mjs';
-import { v4 as uuidv4 } from 'uuid';
 import { userSchema } from '../../models/userSchema.mjs';
 import { comparePasswords, hashpassword, generateJWT } from '../../utils/index.mjs';
 

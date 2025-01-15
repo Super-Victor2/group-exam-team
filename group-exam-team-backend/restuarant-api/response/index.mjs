@@ -20,17 +20,17 @@ export function sendError(status, data) {
     };
 }
 
-export const sendResponseWithHeaders = (statusCode, body, token) => {
+export const sendResponseWithHeaders = (statusCode, body, token) => {    
     return {
         statusCode: statusCode,
         headers: {
             'Content-Type': 'application/json',
             'Authorization' : token,
-            // 'Content-Security-Policy': cspHeader,
-        }, 
+            // 'Content-Security-Policy' : cspHeader,
+        },
         body: JSON.stringify({
             data: body,
-            token: token
+            token : token
         }),
     };
 };

@@ -16,11 +16,12 @@ export const comparePasswords = async (password, storedPassword) => {
 
 export const generateJWT = (user) => {
     const payload = {
-        user : user.username,
-        role: user.role,
-        isAdmin : user.role === "admin"
+        username: user.username,
+        role: user.role, 
+        isAdmin: user.role === 'admin'
     };
-    const token = jwt.sign(payload, process.env.SECRET_ACCESS_KEY, { expiresIn : '1h' });
+
+    const token = jwt.sign(payload, process.env.SECRET_ACCESS_KEY, { expiresIn: '1h' });
 
     return token;
-}
+};

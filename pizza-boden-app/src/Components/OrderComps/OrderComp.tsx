@@ -1,9 +1,5 @@
-import './OrderComp.css'
+import './OrderComp.css';
 import { useEffect, useState } from 'react';
-
-window.addEventListener('load', () : void => {
-    fetchOrders();
-});
 
 interface orderApiResponse {
     data: orderResponse[];
@@ -26,9 +22,14 @@ interface orderCard {
     totalPrice: string;
 }
 
-async function fetchOrders(): Promise<orderResponse[]> {
+async function fetchOrders(token: string): Promise<orderResponse[]> {
     try {
-        const response = await fetch("https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/orders");
+        const response = await fetch("https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/orders", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
         if (!response.ok) {
             throw new Error('Error fetching API');
         } else {
@@ -42,14 +43,30 @@ async function fetchOrders(): Promise<orderResponse[]> {
     }
 }
 
+function getTokenFromSessionStorage(): string {
+    try {
+        const token = sessionStorage.getItem('token') || '';
+        console.log('token:', token);
+        return token;
+    } catch (error) {
+        console.error('Error getting token');
+        return '';
+    }
+}
+
 function OrderComp() {
-    const [orderItems, SetOrderItems] = useState<orderResponse[]>([]);
-    
+    const [orderItems, setOrderItems] = useState<orderResponse[]>([]);
+
     useEffect(() => {
         const getOrders = async () => {
-            const items = await fetchOrders();
-            SetOrderItems(items);
-        }
+            const token = getTokenFromSessionStorage();
+            if (token) {
+                const items = await fetchOrders(token);
+                setOrderItems(items);
+            } else {
+                console.error('No authorization to enter!');
+            }
+        };
         getOrders();
     }, []);
 
@@ -77,7 +94,7 @@ function OrderComp() {
                         ))
                     ) : (
                         <div className="empty-text-wrapper">
-                            <p className="empty-cart-text">Inga beställningar lagda!</p>
+                            <p className="empty-cart-text">Inga beställningar lagda eller så är du inte inloggad!</p>
                         </div>
                     )}
                 </aside>

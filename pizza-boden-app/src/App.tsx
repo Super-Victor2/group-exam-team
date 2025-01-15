@@ -10,6 +10,7 @@ import ShipmentInfoPage from './Pages/ShipmentInfoPage/ShipmentInfoPage'
 import ConfirmPage from './Pages/ConfirmPage/ConfirmPage'
 import OrdersPage from './Pages/OrdersPage/OrderPage'
 import LogInPage from './Pages/LogInPage/LogInPage'
+import UpdatePage from './Pages/UpdatePage/UpdatePage'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path='/ConfirmPage' element={<ConfirmPage />} />
           <Route path='/OrdersPage' element={<OrdersPage />} />
           <Route path='/LogInPage' element={<LogInPage />} />
+          <Route path='/UpdatePage' element={<UpdatePage />} />
       </Routes>
     </div>
     </>
