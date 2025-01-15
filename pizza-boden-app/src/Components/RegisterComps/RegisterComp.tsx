@@ -1,8 +1,8 @@
+import './RegisterComp.css'
 import { useState } from 'react';
-import './LogIn.css';
 
 interface UserApiResponse {
-    user: Users;
+    data: Users;
 }
 
 interface Users {
@@ -16,65 +16,54 @@ interface sendUser {
     role: string;
 }
 
-async function LoginUser(user: sendUser): Promise<void> {
+async function RegisterUser(user: sendUser): Promise<Users> {
     try {
-        console.log("Logging in user:", user.username, user.password);
+        console.log("Registering user:", user.username, user.password);
 
-        const response = await fetch('https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/users/login', {
+        const response = await fetch('https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/users/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(user),
         });
 
-        const result = await response.json();
-
-        if (response.ok && result?.data?.token) {
-            console.log('Login successful:', result.data.message);
-            saveTokenToSessionStorage(result.data.token);
+        if (!response.ok) {
+            throw new Error('Error fetching API');
         } else {
-            throw new Error(result?.error || 'Error during login');
+            const result: UserApiResponse = await response.json()
+            console.log(result)
+            return result.data;
         }
     } catch (error) {
-        console.error('Error logging in:', error);
+        console.error('Error registrating user!:', error);
         throw error;
     }
 }
 
-const saveTokenToSessionStorage = (token: string) => {
-    try {
-        sessionStorage.setItem('token', token);
-        console.log('Token saved to sessionStorage:', token);
-    } catch (error) {
-        console.error('Error saving token to sessionStorage:', error);
-    }
-};
-
-function LogInComp() {
+function RegisterComp() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
 
     const handleLogin = () => {
-        if (!username || !password || !role) {
-            alert('Please enter both username, password and role.');
+        if (!username || !password) {
+            alert('Please enter both username and password');
             return;
         }
 
         const user: sendUser = {
             username,
             password,
-            role,
+            role: "user",
         };
 
-        LoginUser(user);
+        RegisterUser(user);
     };
 
     return (
         <>
             <section className="login-section">
-                <h1 className="login-section-title">Login</h1>
+                <h1 className="login-section-title">Signup</h1>
                 <aside className="login-section-inputs">
                     <input
                         type="text"
@@ -90,13 +79,6 @@ function LogInComp() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <input
-                        type="text"
-                        placeholder="role"
-                        className="role-input"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                    />
                 </aside>
                 <button className="login-btn" onClick={handleLogin}>Logga in</button>
             </section>
@@ -104,4 +86,4 @@ function LogInComp() {
     );
 }
 
-export default LogInComp;
+export default RegisterComp

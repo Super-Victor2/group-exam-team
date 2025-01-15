@@ -11,6 +11,7 @@ interface Order {
     orderId: string;
     items: sendOrder[];
     totalPrice: string;
+    status: string;
 }
 
 interface sendOrder {
@@ -70,6 +71,7 @@ function ConfirmComp() {
                 quantity: item.quantity,
             })),
             totalPrice: (cart.reduce((total, item) => total + parseFloat(item.totalPrice.replace('kr', '')), 0)).toFixed(0) + "kr", // Add 'kr' suffix
+            status: "pending",
         };
         sendOrderToDb(order);
     };

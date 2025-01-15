@@ -22,6 +22,7 @@ export const handler = middy(async (event) => {
             orderId,
             items: body.items,
             totalPrice: body.totalPrice,
+            status: 'pending',
         };
 
         const params = {

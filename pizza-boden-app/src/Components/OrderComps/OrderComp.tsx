@@ -9,6 +9,7 @@ interface orderResponse {
     items: orderCard[];
     orderId: string;
     totalPrice: string;
+    status: string;
 }
 
 interface orderCard {
@@ -20,6 +21,7 @@ interface orderCard {
     class: string;
     quantity: number;
     totalPrice: string;
+    status: string;
 }
 
 async function fetchOrders(token: string): Promise<orderResponse[]> {
@@ -90,6 +92,7 @@ function OrderComp() {
                                     </div>
                                 ))}
                                 <p className="order-total-price">Total Price: {order.totalPrice}</p>
+                                <p className="order-total-price">Status: {order.status}</p>
                             </div>
                         ))
                     ) : (

@@ -76,7 +76,7 @@ const MenyComp = () => {
                                     <p className="meny-price">{item.price}</p>
                                     <p className="meny-description-title">Ingredienser</p>
                                     <p className="meny-class-title">Class</p>
-                                    <p className="meny-description">{item.ingredients}</p>
+                                    <p className="meny-description">{item.ingredients.join(', ')}</p>
                                     <p className="meny-class">{item.class}</p>
                                 </div>
                             ))

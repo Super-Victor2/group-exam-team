@@ -13,14 +13,19 @@ export const handler = middy(async (event) => {
             return sendResponse(400, { error: 'Order item ID is required' });
         }
 
-        const params = {
+        await db.update({
             TableName: 'restuarant-orders',
             Key : { orderId },
-        };
+            UpdateExpression: 'SET #status = :status',
+            ExpressionAttributeNames: {
+                '#status': 'status',
+            },
+            ExpressionAttributeValues: {
+                ':status': 'confirmed',
+            }
+        });
 
-        const result = await db.scan(params);
-
-        return sendResponse(200, result.Items);
+        return sendResponse(200, { orderId, status: 'confirmed' });
     } catch(error) {
         return sendResponse(500, { error: 'Internal Server Error' });
     }

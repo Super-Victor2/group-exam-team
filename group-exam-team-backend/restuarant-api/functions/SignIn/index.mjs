@@ -23,6 +23,10 @@ export const handler = middy(async (event) => {
             return sendResponse(400, { error: `Validation Error: ${error.message}` });
         }
 
+        if (role === "admin") {
+            console.error("User cant be created!")
+            throw new Error("User can not be created!")
+        }
 
         const newUser = {
             username: username,

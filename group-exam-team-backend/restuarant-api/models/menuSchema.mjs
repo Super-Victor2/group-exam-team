@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const menuSchema = Joi.object({
-    orderId: Joi.number().optional(),
+    orderId: Joi.number().required(),
     items: Joi.array().items(Joi.object({
         id: Joi.number().required(),
         name: Joi.string().min(1).required(),
@@ -12,4 +12,5 @@ export const menuSchema = Joi.object({
         quantity: Joi.number().required()
     })).required(),
     totalPrice: Joi.string().pattern(/^\d+kr$/).required(),
+    status: Joi.string().required()
 });
