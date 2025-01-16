@@ -60,18 +60,28 @@ a {
 
 /* Navbar mediaquerries */
 
-@media screen and (max-width: 840px)  {
+@media screen and (max-width: 1035px)  {
     .navbar {
-        gap: 10%;
+        gap: 20%;
     }
     .navbar-list {
         gap: 25px;
     }
 }
 
-@media screen and (max-width: 670px)  {
+@media screen and (max-width: 835px)  {
     .navbar {
-        gap: 40%;
+        gap: 5%;
+    }
+    .navbar-list {
+        gap: 25px;
+    }
+    
+}
+
+@media screen and (max-width: 725px)  {
+    .navbar {
+        gap: 55%;
     }
     .navbar-list {
         display: none;
@@ -82,17 +92,10 @@ a {
         font-size: 28px;
         cursor: pointer;
     }
-}
 
-@media screen and (max-width: 400px)  {
+}
+@media screen and (max-width: 500px)  {
     .navbar {
-        gap: 25%;
-    }
-    .navbar-list {
-        display: none;
-    }
-    .menu {
-        display: block;
-        color: white;
+        gap: 35%;
     }
 }

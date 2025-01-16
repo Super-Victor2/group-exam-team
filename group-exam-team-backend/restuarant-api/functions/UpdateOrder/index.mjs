@@ -13,6 +13,18 @@ export const handler = middy(async (event) => {
             return sendResponse(400, { error: 'Order item ID is required' });
         }
 
+        const result = await db.get({
+            TableName: 'restuarant-orders',
+            Key: { orderId }
+        });
+
+        const currentStatus = result.Item?.status;
+
+        if (currentStatus !== 'pending') {
+            console.error('Order is not pending');
+            return sendResponse(400, { error: 'Order status must be pending to confirm' });
+        }
+
         await db.update({
             TableName: 'restuarant-orders',
             Key : { orderId },

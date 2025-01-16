@@ -72,6 +72,47 @@ function OrderComp() {
         getOrders();
     }, []);
 
+    const handleDelete = async (orderId: string) => {
+        try {
+            const response = await fetch(`https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/delete/${orderId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (response.ok) {
+                alert("Order borttagen!");
+                window.location.reload();
+            } else {
+                alert("Kunde inte ta bort order");
+            }
+        } catch (error) {
+            console.error("Error deleting order", error);
+        }
+    };
+    
+    const handleUpdate = async (orderId: string) => {
+        try {
+            const response = await fetch(`https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/orders/${orderId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },    
+            });
+
+            if (response.ok) {
+                alert("Order uppdaterad!");
+                window.location.reload();
+            } else {
+                alert("Kunde inte uppdatera order");
+            }
+                
+        } catch (error) {
+            console.error("Error updating order", error);
+        }
+    }
+
     return (
         <section className="order-section">
             <h1 className="order-section-title">Beställningar</h1>
@@ -80,7 +121,10 @@ function OrderComp() {
                     {orderItems.length > 0 ? (
                         orderItems.map(order => (
                             <div key={order.orderId} className="order-card">
-                                <h2 className="order-card-id">Order ID: {order.orderId}</h2>
+                                <aside className="order-card-top-text">
+                                    <h2 className="order-card-id">Order ID: {order.orderId}</h2>
+                                    <i onClick={() => handleDelete(order.orderId)} className="order-card-delete-icon fa-solid fa-x"></i>
+                                </aside>
                                 {order.items.map(item => (
                                     <div key={item.id} className="order-item">
                                         <aside className="order-card-wrapper">
@@ -91,13 +135,16 @@ function OrderComp() {
                                         </aside>
                                     </div>
                                 ))}
-                                <p className="order-total-price">Total Price: {order.totalPrice}</p>
-                                <p className="order-total-price">Status: {order.status}</p>
+                                <aside className="order-card-bottom-text">
+                                    <p className="order-total-price">Total Price: {order.totalPrice}</p>
+                                    <p className="order-total-price">Status: {order.status}</p>
+                                </aside>
+                                <button onClick={() => handleUpdate(order.orderId)} className="order-card-confirm-btn">Confirm</button>
                             </div>
                         ))
                     ) : (
                         <div className="empty-text-wrapper">
-                            <p className="empty-cart-text">Inga beställningar lagda eller så är du inte inloggad!</p>
+                            <p className="empty-cart-text">Bara anställda kan se beställningar!</p>
                         </div>
                     )}
                 </aside>

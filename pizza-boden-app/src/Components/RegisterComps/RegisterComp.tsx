@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './RegisterComp.css'
 import { useState } from 'react';
 
@@ -80,7 +81,7 @@ function RegisterComp() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </aside>
-                <button className="login-btn" onClick={handleLogin}>Logga in</button>
+                <Link to={'/LogInPage'}><button className="login-btn" onClick={handleLogin}>Logga in</button></Link>
             </section>
         </>
     );

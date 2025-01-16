@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './LogIn.css';
+import { Link } from 'react-router-dom';
 
 interface UserApiResponse {
     user: Users;
@@ -31,8 +32,9 @@ async function LoginUser(user: sendUser): Promise<void> {
         const result = await response.json();
 
         if (response.ok && result?.data?.token) {
-            console.log('Login successful:', result.data.message);
+            console.log('Login successful:', result);
             saveTokenToSessionStorage(result.data.token);
+            alert("Du är nu inloggad!")
         } else {
             throw new Error(result?.error || 'Error during login');
         }
@@ -61,6 +63,8 @@ function LogInComp() {
             alert('Please enter both username, password and role.');
             return;
         }
+
+        
 
         const user: sendUser = {
             username,
@@ -98,6 +102,8 @@ function LogInComp() {
                         onChange={(e) => setRole(e.target.value)}
                     />
                 </aside>
+                <p className="no-account-text">Har du inget konto?</p>
+                <Link to={'/RegisterPage'}>Klicka här</Link>
                 <button className="login-btn" onClick={handleLogin}>Logga in</button>
             </section>
         </>

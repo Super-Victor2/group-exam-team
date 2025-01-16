@@ -2,7 +2,7 @@ import middy from '@middy/core';
 import { errorHandler } from '../../middlewares/errorHandler.mjs'
 import { sendResponse } from '../../response/index.mjs'
 import { db } from '../../services/index.mjs';
-import { validateToken } from '../../middlewares/validateToken.mjs';
+import { validateTokenAdmin } from '../../middlewares/validateTokenAdmin.mjs';
 
 export const handler = middy(async (event) => {
     try {
@@ -17,7 +17,7 @@ export const handler = middy(async (event) => {
         return sendResponse(500, { error: 'Internal Server Error' });
     }
 }).use(errorHandler())
-  .use(validateToken());
+  .use(validateTokenAdmin());
 
 /**
  * Författare: Victor

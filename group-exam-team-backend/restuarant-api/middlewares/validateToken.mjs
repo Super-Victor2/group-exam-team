@@ -5,6 +5,11 @@ export const validateToken = () => ({
     before: async (handler) => {
         const token = handler.event.headers.authorization && handler.event.headers.authorization.split(' ')[1];
         console.log('validate', token);
+        
+        if (!token) {
+            console.error('No token found');
+            throw new Error('Invalid token!');
+        }
 
         const decodedToken = jwt.verify(token, process.env.SECRET_ACCESS_KEY);
 

@@ -45,7 +45,9 @@ async function sendOrderToDb(order: Order): Promise<void> {
             throw new Error(result.error || 'Error posting order');
         } else {
             const result: OrderApiResponse = await response.json();
-            console.log('Order placed successfully', result);
+            console.log('Order är nu skickad!', result);
+            alert("Order är nu skickad!")
+            window.location.reload();
         }
     } catch (error) {
         console.log('Error in sending order:', error);

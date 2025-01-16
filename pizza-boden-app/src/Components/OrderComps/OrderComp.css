@@ -31,12 +31,29 @@
     margin-top: 55px;
 }
 
+.order-card-top-text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 /* Styling for the card info */
 
 .order-card-id {
     margin-left: 15px;
     font-size: 18px;
     font-weight: 500;
+}
+
+.order-card-delete-icon {
+    margin-right: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.order-card-delete-icon:hover {
+    opacity: 80%;
 }
 
 .order-card-wrapper {
