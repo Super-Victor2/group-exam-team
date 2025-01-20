@@ -2,13 +2,12 @@ import { useState } from 'react';
 import './LogIn.css';
 import { Link } from 'react-router-dom';
 
-interface UserApiResponse {
-    user: Users;
-}
-
-interface Users {
-    userId: string;
-    items: sendUser[];
+interface ApiResponse {
+    data: {
+        message: string;
+        newLogin: sendUser[];
+        token: string;
+    };
 }
 
 interface sendUser {
@@ -17,7 +16,7 @@ interface sendUser {
     role: string;
 }
 
-async function LoginUser(user: sendUser): Promise<UserApiResponse | void> {
+async function LoginUser(user: sendUser): Promise<void> {
     try {
         console.log("Logging in user:", user.username, user.password);
 
@@ -29,15 +28,14 @@ async function LoginUser(user: sendUser): Promise<UserApiResponse | void> {
             body: JSON.stringify(user)
         });
 
-        const result: UserApiResponse = await response.json();
+        const result: ApiResponse = await response.json();
 
-        if (response.ok && (result as any)?.user?.userId) {
+        if (response.ok && result.data?.token) {
             console.log('Login successful:', result);
-            saveTokenToSessionStorage(result.user.userId);
+            saveTokenToSessionStorage(result.data.token);
             alert("Du är nu inloggad!");
-            return result;
         } else {
-            throw new Error((result as any)?.error || 'Error during login');
+            throw new Error(result.data?.message || 'Error during login');
         }
     } catch (error) {
         console.error('Error logging in:', error);
