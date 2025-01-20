@@ -17,7 +17,7 @@ interface sendUser {
     role: string;
 }
 
-async function LoginUser(user: sendUser): Promise<void> {
+async function LoginUser(user: sendUser): Promise<UserApiResponse | void> {
     try {
         console.log("Logging in user:", user.username, user.password);
 
@@ -29,14 +29,15 @@ async function LoginUser(user: sendUser): Promise<void> {
             body: JSON.stringify(user)
         });
 
-        const result = await response.json();
+        const result: UserApiResponse = await response.json();
 
-        if (response.ok && result?.data?.token) {
+        if (response.ok && (result as any)?.user?.userId) {
             console.log('Login successful:', result);
-            saveTokenToSessionStorage(result.data.token);
-            alert("Du är nu inloggad!")
+            saveTokenToSessionStorage(result.user.userId);
+            alert("Du är nu inloggad!");
+            return result;
         } else {
-            throw new Error(result?.error || 'Error during login');
+            throw new Error((result as any)?.error || 'Error during login');
         }
     } catch (error) {
         console.error('Error logging in:', error);
