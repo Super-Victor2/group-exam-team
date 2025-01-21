@@ -73,11 +73,18 @@ function OrderComp() {
     }, []);
 
     const handleDelete = async (orderId: string) => {
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+            alert('Ingen token hittades. Vänligen logga in igen.');
+            return;
+        }
+    
         try {
             const response = await fetch(`https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/delete/${orderId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
                 },
             });
     
@@ -91,13 +98,21 @@ function OrderComp() {
             console.error("Error deleting order", error);
         }
     };
+       
     
     const handleUpdate = async (orderId: string) => {
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+            alert('Ingen token hittades. Vänligen logga in igen.');
+            return;
+        }
+
         try {
             const response = await fetch(`https://kisczu4vrd.execute-api.eu-north-1.amazonaws.com/menu/orders/${orderId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
                 },    
             });
 

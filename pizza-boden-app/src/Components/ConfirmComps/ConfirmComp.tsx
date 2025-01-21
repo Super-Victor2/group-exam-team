@@ -117,9 +117,7 @@ function ConfirmComp() {
                         </aside>
                     </aside>
                 </section>
-                <button
-                    className="confirm-section-button" onClick={handleSubmitOrder}>Godkänn</button>
-
+                <Link to="/"><button className="confirm-section-button" onClick={handleSubmitOrder}>Godkänn</button></Link>
                 <Link to="/ShipmentInfoPage"><button className="confirm-section-button">Tillbaka</button></Link>
             </section>
         </>
